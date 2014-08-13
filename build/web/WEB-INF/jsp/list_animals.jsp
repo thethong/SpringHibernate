@@ -65,7 +65,7 @@ body {
                     border: 1 solid blue;
             }
         </style>
-
+        <input style="width:100px;height:30px" id="btnTest" type="button" value="TEST POST AJAX" />    
         <div>
             <h1>NAME:  </h1>
         </div>
@@ -139,13 +139,29 @@ body {
                   $("#btnRefresh").click(function(){
                           search(statusDog,statusCat);
                   });
+                  
+                  $("#btnTest").click(function(){
+                        $.ajax({
+                                type: "post",
+                                url: "http://localhost:8084/SpringHibernate/animal/post.html",
+                                cache: false,				
+                                //data:'firstName=' + $("#firstName").val() + "&lastName=" + $("#lastName").val() + "&email=" + $("#email").val(),
+                                success: function(response){
+                                        var obj = JSON.parse(response);
+                                        alert(obj);
+                                },
+                                error: function(){						
+                                        alert('Error while request..');
+                                }
+                        });
+                  });
                 });
 
         function search(strDog,strCat)
         {
                 $('body').addClass("loading");
                 jQuery.ajax({
-                    url: 'http://localhost:8084/DemoSpring/animal/search', // url call controller at server (PHP)
+                    url: 'http://localhost:8084/SpringHibernate/animal/search', // url call controller at server (PHP)
                     type: "POST", // method transfer data
                     data: {DOG: strDog, CAT: strCat}, // data JSON need move to server 
                     success: function(response) {			// transfer succees
